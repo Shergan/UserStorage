@@ -1,19 +1,20 @@
 package com.divashchenko;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface Storage {
-    void removeAll();
+    void removeAll() throws SQLException;
 
-    void removeUser(int id);
+    void removeUser(int id) throws SQLException;
 
-    void removeUserByName(String name);
+    void removeUserByName(String name) throws SQLException;
 
-    void addUser(User user);
+    void addUser(User user) throws SQLException;
 
-    void updateUser(User user);
+    void updateUser(User user) throws SQLException;
 
-    User getUser(int id);
+    User getUser(int id) throws SQLException;
 
-    List<User> getAllUsers();
+    List<User> getAllUsers() throws SQLException;
 }
