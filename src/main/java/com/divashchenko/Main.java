@@ -1,47 +1,32 @@
 package com.divashchenko;
 
+import java.sql.SQLException;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-        FileStorage fileStorage = new FileStorage("Test.txt");
+        try {
+            UserDao dao = new UserDao();
+            dao.removeAll();
 
-        User user1 = new User("Alex", 20);
-        User user2 = new User("Mark", 30);
-        User user3 = new User("Kate", 25);
-        User user4 = new User("Nika", 35);
+            User testUser = new User("Alex", 20);
+            User testUser2 = new User("Olga", 25);
 
-        System.out.println("addUser test");
-        fileStorage.addUser(user1);
-        fileStorage.addUser(user2);
-        fileStorage.addUser(user3);
-        fileStorage.addUser(user4);
-        System.out.println(fileStorage.getAllUsers().toString());
+            dao.addUser(testUser);
+            testUser.name = "Alex Test";
+            dao.updateUser(testUser);
+            dao.removeUser(0);
 
-        System.out.println();
-        System.out.println("removeUser test");
-        fileStorage.removeUser(2);
-        fileStorage.removeUserByName("Nika");
-        System.out.println(fileStorage.getAllUsers().toString());
+            dao.addUser(testUser);
+            dao.addUser(testUser2);
 
-        System.out.println();
-        System.out.println("removeAll test");
-        fileStorage.removeAll();
-        System.out.println(fileStorage.getAllUsers().toString());
+            User user = dao.getUser(2);
+            System.out.println(user);
 
-        System.out.println();
-        System.out.println("addUser with new ID test");
-        fileStorage.addUser(user3);
-        fileStorage.addUser(user4);
-        System.out.println(fileStorage.getAllUsers().toString());
-
-        System.out.println();
-        System.out.println("updateUser test");
-        user4.age = 100500;
-        fileStorage.updateUser(user4);
-        System.out.println(fileStorage.getAllUsers().toString());
-
-        System.out.println();
-        System.out.println("getUser test");
-        User user5 = fileStorage.getUser(5);
-        System.out.println(user5);
+            List<User> users = dao.getAllUsers();
+            System.out.println(users);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
