@@ -50,7 +50,8 @@ public class UserDao implements Storage {
 
     public void updateUser(User user) throws SQLException {
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate("UPDATE users SET name = '" + user.name + "', age = '" + user.age + "' WHERE _id = " + user.id);
+            String request = String.format("UPDATE users SET name = '%s', age = '%d' WHERE _id = '%d'", user.name, user.age, user.id);
+            statement.executeUpdate(request);
         }
     }
 
@@ -87,7 +88,7 @@ public class UserDao implements Storage {
         try (Statement statement = connection.createStatement()) {
             statement.execute("CREATE TABLE IF NOT EXISTS users (\n" +
                     "_id int PRIMARY KEY,\n" +
-                    "name varchar(100),\n" +
+                    "name varchar(30),\n" +
                     "age int\n" +
                     ");");
         }
